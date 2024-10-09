@@ -1,0 +1,40 @@
+step 1 : schema.ts
+step 2 : drizzel.config.ts
+step 2 : setup script in package.json
+https://orm.drizzle.team/docs/get-started/mysql-new
+
+-----------------------------------------KAFKA SOURCE [GPT] & [https://www.redpanda.com/guides/kafka-tutorial]--------------------------------------
+ Install Instructions:---        
+ 
+[KAFKA] 
+
+ sudo docker run -d --name kafka \
+  -p 9092:9092 \
+  --link zookeeper:zookeeper \
+  -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 \
+  -e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 \
+  -e KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 \
+  wurstmeister/kafka:latest
+  
+[ZOOKEEPER]
+
+ sudo docker run -d --name zookeeper   -p 2181:2181   wurstmeister/zookeeper:latest
+
+[TOPIC CREATION INSIDE KAFKA DOCKER CONTAINER]
+
+                                                       
+ sudo docker exec -it kafka bash
+ root@faa866645bd8:/# kafka-topics.sh --create --topic car-topic --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+ Created topic car-topic.
+ root@faa866645bd8:/# kafka-topics.sh --list --bootstrap-server localhost:9092
+ car-topic
+                                                       ---------PRODUCER IN TERMINAL A---------
+ root@faa866645bd8:/# kafka-console-producer.sh --bootstrap-server localhost:9092 --topic car-topic
+ >HELLO THIS IS MESSAGE SEND FROM KAFA PRODUCER
+
+                                                       ---------CONSUMER IN TERMINAL B---------
+ root@faa866645bd8:/# kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic car-topic --from-beginning
+ HELLO THIS IS MESSAGE SEND FROM KAFA PRODUCER
+
+
+
