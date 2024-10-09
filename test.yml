@@ -1,0 +1,14 @@
+config:
+  target: 'http://localhost:3004'  # Your NestJS API URL
+  phases:
+    - duration: 60
+      arrivalRate: 500  # 1000 requests per second
+scenarios:
+  - flow:
+      - post:
+          url: "/car/push"
+          json:
+            name: "Test Car"
+            color: "Blue"
+
+# THIS WILL PUT A LOAD ON THE DB
